@@ -1,5 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
 body{
     margin: 0;
     height: 100vh;
-    width: 100vh;
+    width: 100vw;
+    background-image: linear-gradient(90deg, #667EEA 0%, #764BA2 100%);;
+}
+*, *::after, *::before{
+    color: white;
+    margin: 0;
+    padding: 0;
+    font-family: 'Ubuntu', sans-serif;
+    box-sizing: border-box;
+}
+html{
+    --color: #0047FF;
+}
+a{
+    text-decoration: none;
+    display: inline-block;
+}
+canvas{
+    cursor: grab;
+}
+.screen{
+    height: 100%;
+}
+.screen .container{
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: 1200px;
+    margin: 0 auto;
+    height: 100%;
+}
+.content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.content__footer{
+    margin-top: 45px;
+    display: flex;
+    gap: 60px;
+}
+.title{
+    line-height: 1.2;
+    font-size: 74px;
+    margin-bottom: 45px;
+}
+.subtitle{
+    line-height: 1.5;
+}
+.button{
+    padding: 17px 46px;
+    border: 1px solid;
+    text-transform: uppercase;
+    border-radius: 20px;
+    transition: all 0.2s ease-in-out;
+}
+.button_active, .button:hover{
+    background-color: var(--color);
+    border-color: transparent;
+}
+.button_active:hover{
+    opacity: 0.8;
+}
+.menu{
+    display: flex;
+    gap: 30px;
+}
+.menu__item{
+    text-transform: uppercase;
+
+}
+.menu__item:hover{
+    color: var(--color);
+}
+.logo{
+    margin-right: 100px;
+}
+.header{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    padding: 40px 120px;
+    justify-content: space-between;
+}
+.header__right{
+    display: flex;
+    align-items: center;
+
+}
+.header__actions{
+    display: flex;
+    gap: 30px;
+    align-items: center;
 }
