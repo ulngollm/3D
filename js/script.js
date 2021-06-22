@@ -37,8 +37,8 @@ cube.rotation.set(0, 45, 90);
 
 function animateObject(time){
     // console.log(time);
-    cube.rotation.x = time*0.00002;
-    cube.rotation.y = time*0.0001;
+    cube.rotation.x = cube.rotation.x + 0.002;
+    cube.rotation.y = cube.rotation.y + 0.003;
 
     renderer.render(scene, camera);
     requestAnimationFrame(animateObject);
