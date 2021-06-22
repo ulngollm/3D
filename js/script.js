@@ -6,7 +6,7 @@ canvas.setAttribute('height', window.innerHeight);
 
 //обязательные объекты
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(50, width / height, 20, 2000);
+const camera = new THREE.PerspectiveCamera(75, width / height, 20, 2000);
 camera.position.set(0, 0, 500);
 const renderer = new THREE.WebGLRenderer({
     canvas: canvas
@@ -23,12 +23,16 @@ scene.add(light);
 let geometry = new THREE.SphereGeometry(150, 30, 9);
 let material = new THREE.MeshPhongMaterial({
     color: 0xffff00,
-    // wireframe: true,
-    // side: THREE.DoubleSide
 });
 const sphere = new THREE.Mesh(geometry, material);
 scene.add(sphere);
+sphere.visible = false;
 
+const cubeGeometry = new THREE.BoxGeometry(120, 200, 20);
+
+const cube = new THREE.Mesh(cubeGeometry, material);
+scene.add(cube);
+cube.rotation.set(0, 45, 90);
 
 renderer.render(scene, camera);
 
