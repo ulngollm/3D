@@ -11,7 +11,7 @@ camera.position.set(0, 0, 500);
 const renderer = new THREE.WebGLRenderer({
     canvas: canvas
 });
-
+scene.background = new THREE.Color(0xffffff);
 //light
 const color = 0xFFFFFF;
 const intensity = 1;
@@ -32,16 +32,34 @@ const cubeGeometry = new THREE.TorusKnotGeometry(80, 30, 50, 15,4);
 
 const cube = new THREE.Mesh(cubeGeometry, material);
 scene.add(cube);
-cube.rotation.set(0, 45, 90);
 
-
+let params = {
+    rotationX:0,
+    rotationY:0,
+    rotationZ:0,
+    positionX:0,
+    positionY:0,
+    positionZ:0,
+}
 function animateObject(time){
     // console.log(time);
-    cube.rotation.x = cube.rotation.x + 0.002;
-    cube.rotation.y = cube.rotation.y + 0.003;
+    cube.rotation.x += params.rotationX;
+    cube.rotation.y += params.rotationY;
+    cube.rotation.z += params.rotationZ;
+    cube.position.x += params.positionX;
+    cube.position.y += params.positionY;
+    cube.position.z += params.positionZ;
 
     renderer.render(scene, camera);
     requestAnimationFrame(animateObject);
 }
 requestAnimationFrame(animateObject);
+
+const gui = new dat.GUI();
+gui.add(params, 'rotationX').min(-0.2).max(0.2).step(0.001);
+gui.add(params, 'rotationY').min(-0.2).max(0.2).step(0.001);
+gui.add(params, 'rotationZ').min(-0.2).max(0.2).step(0.001);
+gui.add(params, 'positionX').min(-5).max(5).step(0.1);
+gui.add(params, 'positionY').min(-5).max(5).step(0.1);
+gui.add(params, 'positionZ').min(-5).max(5).step(0.1);
 
