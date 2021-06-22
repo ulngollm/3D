@@ -1,3 +1,5 @@
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.121.1/build/three.module.js';
+import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.121.1/examples/jsm/controls/OrbitControls.js';
 const canvas = document.querySelector('canvas');
 const height = window.innerHeight;
 const width = window.innerWidth;
@@ -63,3 +65,5 @@ gui.add(params, 'positionX').min(-5).max(5).step(0.1);
 gui.add(params, 'positionY').min(-5).max(5).step(0.1);
 gui.add(params, 'positionZ').min(-5).max(5).step(0.1);
 
+const controls = new OrbitControls(camera, canvas);
+console.log(renderer);
