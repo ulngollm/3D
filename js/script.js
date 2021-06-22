@@ -22,13 +22,13 @@ scene.add(light);
 //объекты сцены
 let geometry = new THREE.SphereGeometry(150, 30, 9);
 let material = new THREE.MeshPhongMaterial({
-    color: 0xffff00,
+    color: 0x3e1d00,
 });
 const sphere = new THREE.Mesh(geometry, material);
 scene.add(sphere);
 sphere.visible = false;
 
-const cubeGeometry = new THREE.BoxGeometry(120, 200, 20);
+const cubeGeometry = new THREE.TorusKnotGeometry(80, 30, 50, 15,4);
 
 const cube = new THREE.Mesh(cubeGeometry, material);
 scene.add(cube);
