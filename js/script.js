@@ -34,6 +34,14 @@ const cube = new THREE.Mesh(cubeGeometry, material);
 scene.add(cube);
 cube.rotation.set(0, 45, 90);
 
-renderer.render(scene, camera);
 
+function animateObject(time){
+    // console.log(time);
+    cube.rotation.x = time*0.00002;
+    cube.rotation.y = time*0.0001;
+
+    renderer.render(scene, camera);
+    requestAnimationFrame(animateObject);
+}
+requestAnimationFrame(animateObject);
 
