@@ -7,7 +7,7 @@ import {
 } from 'https://cdn.jsdelivr.net/npm/three@0.121.1/examples/jsm/loaders/GLTFLoader.js';
 const canvas = document.querySelector('canvas');
 const height = window.innerHeight;
-const width = 600;
+const width = window.innerWidth;
 canvas.setAttribute('width', width);
 canvas.setAttribute('height', height);
 
@@ -21,6 +21,14 @@ const renderer = new THREE.WebGLRenderer({
     premultipliedAlpha: false,
 });
 
+//create objects
+const cylinderGeometry = new THREE.CylinderGeometry(5, 5, 2, 12);
+const whiteMaterial =  new THREE.MeshPhongMaterial({color: 0xffffff});
+const cylinder = new THREE.Mesh(cylinderGeometry, whiteMaterial);
+cylinder.rotation.x = Math.PI / 4;
+// cylinder.position.x = 100;
+scene.add(cylinder);
+
 //import
 const gltfLoader = new GLTFLoader();
 let dna = null;
@@ -32,11 +40,12 @@ gltfLoader.load('assets/dna/scene.gltf', (gltf) => {
     dna.rotation.x = Math.PI / 8;
     dna.rotation.z = Math.PI / 10;
 
-
     scene.add(dna);
 
     function animateObject(time) {
-        rotate(dna);
+        rotate(dna, 'y');
+        rotate(cylinder, 'x');
+        move(cylinder, 'y');
         renderer.render(scene, camera);
         controls.update();
         requestAnimationFrame(animateObject);
@@ -44,6 +53,8 @@ gltfLoader.load('assets/dna/scene.gltf', (gltf) => {
     requestAnimationFrame(animateObject);
 
 });
+
+
 
 //controls
 const controls = new OrbitControls(camera, canvas);
@@ -62,6 +73,15 @@ light.position.set(1, -10, 10);
 scene.add(light);
 
 const rotateSpeed = Math.PI / 600;
-function rotate(obj) {
-    obj.rotation.y += rotateSpeed;
+function rotate(obj, directions = 'xyz') {
+    let params = directions.split('');
+    for(let param of params){
+        obj.rotation[param] += rotateSpeed;
+    }
+}
+
+
+
+function createObject(type, size){
+
 }

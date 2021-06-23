@@ -54,7 +54,9 @@ gui.add(params, 'rotationZ').min(-0.2).max(0.2).step(0.001);
 gui.add(params, 'positionX').min(-5).max(5).step(0.1);
 gui.add(params, 'positionY').min(-5).max(5).step(0.1);
 gui.add(params, 'positionZ').min(-5).max(5).step(0.1);
-
+gsap.fromTo(torus.position, {y: -20}, {y: 20, duration: 1,  yoyo: true, repeat: -1});
+gsap.to(torus.rotation, {z: -Math.PI/2, duration: 2,  yoyo: true, repeat: -1, easing:'sine.inOut'});
+gsap.to(torus.position, {x: 20, duration: 2,  yoyo: true, repeat: -1, easing:'sine'});
 function animateObject(time){
     torus.rotation.x += params.rotationX;
     torus.rotation.y += params.rotationY;
@@ -62,9 +64,10 @@ function animateObject(time){
     torus.position.x += params.positionX;
     torus.position.y += params.positionY;
     torus.position.z += params.positionZ;
-
+    
     renderer.render(scene, camera);
     controls.update();
     requestAnimationFrame(animateObject);
 }
+
 requestAnimationFrame(animateObject);
