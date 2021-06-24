@@ -1,0 +1,196 @@
+{
+    "asset" : {
+        "generator" : "Khronos glTF Blender I/O v1.1.46",
+        "version" : "2.0"
+    },
+    "scene" : 0,
+    "scenes" : [
+        {
+            "name" : "Scene",
+            "nodes" : [
+                0
+            ]
+        }
+    ],
+    "nodes" : [
+        {
+            "mesh" : 0,
+            "name" : "polySurface56",
+            "rotation" : [
+                0.7071067690849304,
+                0,
+                0,
+                0.7071067690849304
+            ]
+        }
+    ],
+    "materials" : [
+        {
+            "doubleSided" : true,
+            "emissiveFactor" : [
+                0,
+                0,
+                0
+            ],
+            "name" : "Base_Material.001",
+            "pbrMetallicRoughness" : {
+                "baseColorFactor" : [
+                    1,
+                    1,
+                    1,
+                    1
+                ],
+                "metallicFactor" : 0,
+                "roughnessFactor" : 0.5527864098548889
+            }
+        },
+        {
+            "doubleSided" : true,
+            "name" : "Fita_Material.001",
+            "pbrMetallicRoughness" : {}
+        }
+    ],
+    "meshes" : [
+        {
+            "name" : "Mesh.001",
+            "primitives" : [
+                {
+                    "attributes" : {
+                        "POSITION" : 0,
+                        "NORMAL" : 1,
+                        "TEXCOORD_0" : 2
+                    },
+                    "indices" : 3,
+                    "material" : 0
+                },
+                {
+                    "attributes" : {
+                        "POSITION" : 4,
+                        "NORMAL" : 5,
+                        "TEXCOORD_0" : 6
+                    },
+                    "indices" : 7,
+                    "material" : 1
+                }
+            ]
+        }
+    ],
+    "accessors" : [
+        {
+            "bufferView" : 0,
+            "componentType" : 5126,
+            "count" : 3696,
+            "max" : [
+                3.308339834213257,
+                3.317808151245117,
+                15.076152801513672
+            ],
+            "min" : [
+                -3.3083369731903076,
+                -3.3179311752319336,
+                -14.720638275146484
+            ],
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 1,
+            "componentType" : 5126,
+            "count" : 3696,
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 2,
+            "componentType" : 5126,
+            "count" : 3696,
+            "type" : "VEC2"
+        },
+        {
+            "bufferView" : 3,
+            "componentType" : 5123,
+            "count" : 10560,
+            "type" : "SCALAR"
+        },
+        {
+            "bufferView" : 4,
+            "componentType" : 5126,
+            "count" : 57948,
+            "max" : [
+                4.7518510818481445,
+                4.772599220275879,
+                15.742228507995605
+            ],
+            "min" : [
+                -4.751847743988037,
+                -4.772722244262695,
+                -15.59793472290039
+            ],
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 5,
+            "componentType" : 5126,
+            "count" : 57948,
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 6,
+            "componentType" : 5126,
+            "count" : 57948,
+            "type" : "VEC2"
+        },
+        {
+            "bufferView" : 7,
+            "componentType" : 5123,
+            "count" : 300960,
+            "type" : "SCALAR"
+        }
+    ],
+    "bufferViews" : [
+        {
+            "buffer" : 0,
+            "byteLength" : 44352,
+            "byteOffset" : 0
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 44352,
+            "byteOffset" : 44352
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 29568,
+            "byteOffset" : 88704
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 21120,
+            "byteOffset" : 118272
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 695376,
+            "byteOffset" : 139392
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 695376,
+            "byteOffset" : 834768
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 463584,
+            "byteOffset" : 1530144
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 601920,
+            "byteOffset" : 1993728
+        }
+    ],
+    "buffers" : [
+        {
+            "byteLength" : 2595648,
+            "uri" : "scene.bin"
+        }
+    ]
+}

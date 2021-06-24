@@ -22,115 +22,123 @@ const renderer = new THREE.WebGLRenderer({
 });
 // scene.background = new THREE.Color(0xB1E1FF);
 
+//interact
+const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
+
+function onMouseMove(event) {
+    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+}
+window.addEventListener('mousemove', onMouseMove, false);
+
+
 //create objects
-const cylinderGeometry = new THREE.CylinderGeometry(5, 5, 2, 12);
-const whiteMaterial = new THREE.MeshPhongMaterial({
-    color: 0xffffff
-});
-const pill = new THREE.Mesh(cylinderGeometry, whiteMaterial);
-pill.rotation.x = Math.PI / 4;
-// cylinder.position.x = 100;
-// scene.add(pill);
+function createBall(size, color) {
+    const geometry = new THREE.IcosahedronGeometry(size, 1);
+    const material = new THREE.MeshPhongMaterial(color);
+    return new THREE.Mesh(geometry, material);
+}
 
-const pill2 = new THREE.Mesh(cylinderGeometry, whiteMaterial);
-pill2.position.set(10, 10, 10);
-pill2.scale.set(1.2, 1.2, 1.2);
-// scene.add(pill2);
-gsap.fromTo(pill2.position, {
-    x: -100
-}, {
-    x: 100,
-    yoyo: true,
-    duration: 20,
-    repeat: -1,
-    easing: 'sine.inOut'
-});
-gsap.fromTo(pill2.position, {
-    y: -100
-}, {
-    y: 10,
-    yoyo: true,
-    duration: 20,
-    repeat: -1,
-    easing: 'sine.inOut'
-});
-gsap.to(pill2.rotation, {
-    x: Math.PI,
-    duration: 20,
-    ease: "none",
-    repeat: -1
-})
-// gsap.to(pill2.rotation, {x:})
-
-
-const icosGeometry = new THREE.IcosahedronGeometry(10, 1);
-const transpMaterial = new THREE.MeshPhongMaterial({
-    color: 0xffffff,
-    wireframe: true
-});
-const icosaheder = new THREE.Mesh(icosGeometry, transpMaterial);
-// scene.add(icosaheder);
-
-const torusGeometry = new THREE.TorusGeometry(10, 3, 7, 11);
-const torusMaterial = new THREE.MeshPhongMaterial({
-    color: 0x0047ff
-});
-const torus = new THREE.Mesh(torusGeometry, torusMaterial);
-const coreGeometry = new THREE.OctahedronGeometry(5, 2);
-const coreMaterial = new THREE.MeshPhongMaterial({
-    color: 0x6cff79
-});
-const core = new THREE.Mesh(coreGeometry);
-core.material = coreMaterial;
-
-const torusGroup = new THREE.Group();
-torusGroup.add(torus);
-torusGroup.add(core);
-torusGroup.position.x = 50;
-scene.add(torusGroup);
-
+function createBottleInner() {
+    const bottle = new THREE.Group();
+    const colors = [0xff002d, 0x0000ff];
+    colors.forEach((color, index) => {
+        let ball = createBall(1, {
+            color: color
+        });
+        ball.position.set(2*index, 0, 2*index);
+        gsap.to(ball.position, {
+            y: 6,
+            yoyo: true,
+            duration: 1.5,
+            delay: "random(0,1, 0.25)",
+            repeat: -1
+        })
+        bottle.add(ball);
+    })
+    return bottle;
+}
 
 //import
 const loader = new GLTFLoader();
-var dna;
-loader.load('assets/dna/scene.gltf', (gltf) => {
-    let dnaMesh = gltf.scene;
-    dna = dnaMesh.clone(true);
-    console.log(dna.material);
-    dna.material = new THREE.MeshNormalMaterial();
-    let dna2 = dnaMesh.clone(true);
-    dna2.rotation.y = Math.PI / 4;
-    dna2.material = new THREE.MeshNormalMaterial();
-
+loader.load('assets/dna_upd/scene.gltf', (gltf) => {
+    let dna = gltf.scene.children[0];
+    dna.rotation.y = Math.PI / 4;
+    dna.position.set(20, 1, 0);
     scene.add(dna);
-    // scene.add(dna2);
+    gsap.to(dna.rotation, {
+        z: Math.PI * 2,
+        repeat: -1,
+        duration: 5,
+        ease: "none"
+    })
 });
-
 loader.load('assets/flask/scene.gltf', (gltf) => {
-    let mesh = gltf.scene.children[0];
-    mesh.scale.set(5, 5, 5);
-    console.log(mesh.material);
-    scene.add(mesh);
+    let flask = gltf.scene.children[0];
+    flask.scale.set(5, 5, 5);
+    console.log(flask.material);
+    let bottle = createBottleInner();
+    bottle.add(flask);
+    scene.add(bottle);
+    gsap.to(bottle.rotation, {
+        y: Math.PI * 2,
+        repeat: -1,
+        duration: 5,
+        yoyo: false,
+        ease: "none"
+    })
 })
 
 loader.load('assets/pill/scene.gltf', (gltf) => {
-    let mesh = gltf.scene.children[0];
-    // console.log(gltf.scene);
-    mesh.scale.set(mesh.scale.x * 1.5, mesh.scale.y* 1.5, mesh.scale.z* 1.5);
-    mesh.material = whiteMaterial;
-    // console.log(mesh);
-    mesh.position.x = 10;
-    scene.add(mesh);
+    let pill = gltf.scene.children[0];
+    pill.scale.set(pill.scale.x * 1.5, pill.scale.y * 1.5, pill.scale.z * 1.5);
+    pill.material = new THREE.MeshPhongMaterial({
+        color: 0xffffff
+    });
+    scene.add(pill);
+    gsap.fromTo(pill.position, {
+        x: -70
+    }, {
+        x: 70,
+        duration: 40,
+        yoyo: true,
+        repeat: -1
+    });
+    gsap.fromTo(pill.position, {
+        y: -20
+    }, {
+        y: 20,
+        duration: 40,
+        yoyo: true,
+        repeat: -1
+    });
+    gsap.to(pill.rotation, {
+        y: Math.PI * 2,
+        z: Math.PI * 2,
+        duration: 20,
+        repeat: -1
+    });
 
 })
 //start animation
-function animateObject(time) {
-    renderer.render(scene, camera);
+function render() {
+    raycaster.setFromCamera(mouse, camera);
+
+    const intersects = raycaster.intersectObjects(scene.children);
+    for(let elem of intersects){
+        gsap.to(elem.object.position, {y:0.0001, duration:0.2, yoyo:true, repeat:1})
+        console.log(elem);
+    }
+
     controls.update();
-    requestAnimationFrame(animateObject);
+    renderer.render(scene, camera);
+    requestAnimationFrame(render);
 
 }
-requestAnimationFrame(animateObject);
+requestAnimationFrame(render);
+
+
 
 
 
@@ -154,4 +162,3 @@ light.position.set(0, 50, 50);
 scene.add(light);
 const helper = new THREE.PointLightHelper(light);
 scene.add(helper);
-
