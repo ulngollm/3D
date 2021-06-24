@@ -33,8 +33,10 @@ scene.add(light);
 
 //объекты сцены
 const geometry = new THREE.TorusKnotGeometry(80, 30, 50, 15,4);
-const material = new THREE.MeshPhongMaterial({color: 0xd300ff, flatShading: true});
-material.shininess = 1000;
+const material = new THREE.MeshStandardMaterial({color: 0xd300ff});
+// material.shininess = 1000;
+material.roughness = 0.3;
+material.metallness = 0.6;
 const torus = new THREE.Mesh(geometry, material);
 scene.add(torus);
 
