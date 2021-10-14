@@ -28,35 +28,111 @@ controls.dampingFactor = 0.1;
 const color = 0xffffff;
 const intensity = 1;
 const light = new THREE.DirectionalLight(color, intensity);
-light.position.set(0,10,10);
+light.position.set(0, 10, 10);
 scene.add(light);
 
 const loader = new GLTFLoader();
-loader.load('assets/panda.gltf', (gltf) => {
+loader.load("assets/panda.gltf", (gltf) => {
     let panda = gltf.scene;
     panda.rotation.x = Math.PI / 2;
     panda.rotation.y = Math.PI;
-    scene.add(panda);
+    // scene.add(panda);
 });
 
-loader.load('assets/burger.gltf', (gltf) => {
-    let burger = gltf.scene;
-    burger.position.set(3, 2, 0)
+loader.load("assets/burger.gltf", (gltf) => {
+    let burger = gltf.scene.children[0];
+    burger.position.set(3, 2, 0);
     scene.add(burger);
+
+    burger.userData.draggable = true;
+    burger.userData.name = "burger";
+
 });
 
-loader.load('assets/duck.gltf', (gltf) => {
-    let bird = gltf.scene;
+loader.load("assets/flower.gltf", (gltf) => {
+    let flower = gltf.scene;
+    flower.scale.set(0.1, 0.1, 0.1);
+    flower.position.set(-3, 2, 0);
+    scene.add(flower);
     console.log(gltf);
-    bird.scale.set(20,20,20)
-    // bird.position.set(0, 0, -50)
-    // scene.add(bird);
+
+    flower.userData.draggable = true;
+    flower.userData.name = "flower";
+});
+
+loader.load("assets/sun.gltf", (gltf) => {
+    let sun = gltf.scene.children[0];
+    sun.scale.set(0.1, 0.1, 0.1);
+    sun.position.set(3, -2, 0);
+    scene.add(sun);
+
+    sun.userData.draggable = true;
+    sun.userData.name = "sun";
+});
+
+loader.load("assets/ice.gltf", (gltf) => {
+    let ice = gltf.scene.children[0];
+    ice.position.set(-3, -2, 0);
+    ice.scale.set(0.5, 0.5, 0.5);
+    // scene.add(ice);
+    ice.userData.draggable = true;
+    ice.userData.name = "ice";
+});
+
+loader.load("assets/ice2.gltf", (gltf) => {
+    let ice = gltf.scene.children[0];
+    ice.scale.set(0.8, 0.8, 0.8);
+    scene.add(ice);
+
+    ice.userData.draggable = true;
+    ice.userData.name = "ice";
+});
+
+loader.load("assets/leaf.gltf", (gltf) => {
+    let leaf = gltf.scene;
+    leaf.position.set(-6, -2, 0);
+    leaf.rotation.z = Math.PI / 4;
+    // scene.add(leaf);
+});
+
+loader.load("assets/duck.gltf", (gltf) => {
+    let duck = gltf.scene;
+    duck.scale.set(10, 10, 10);
+    duck.position.set(-3, 2, 0);
+    // scene.add(duck);
 });
 
 function render() {
     controls.update();
     renderer.render(scene, camera);
     requestAnimationFrame(render);
-
 }
 requestAnimationFrame(render);
+
+const raycaster = new THREE.Raycaster(); // create once
+const clickMouse = new THREE.Vector2(); // create once
+const moveMouse = new THREE.Vector2(); // create once
+let draggable = THREE.Object3D;
+
+window.addEventListener("mousemove", (event) => {
+    console.log(event);
+    clickMouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    clickMouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+    raycaster.setFromCamera(clickMouse, camera);
+    const found = raycaster.intersectObjects(scene.children);
+    if (found.length > 0 && found[0].object.userData.draggable) {
+        draggable = found[0].object;
+        console.log(`found draggable ${draggable.userData.name}`);
+        draggable.rotation.y += Math.PI/360 * event.movementX;
+        draggable.rotation.x += Math.PI/360 * event.movementY;
+    }
+
+    renderer.render(scene, camera);
+});
+
+
+window.addEventListener("mousemove", (event) => {
+    moveMouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    moveMouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+});
