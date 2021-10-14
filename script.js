@@ -18,11 +18,11 @@ const renderer = new THREE.WebGLRenderer({
 scene.background = new THREE.Color(0xffffff);
 
 //controls
-const controls = new OrbitControls(camera, canvas);
-controls.enablePan = false;
-controls.maxPolarAngle = Math.PI;
-controls.enableDamping = true;
-controls.dampingFactor = 0.1;
+// const controls = new OrbitControls(camera, canvas);
+// controls.enablePan = false;
+// controls.maxPolarAngle = Math.PI;
+// controls.enableDamping = true;
+// controls.dampingFactor = 0.1;
 
 //light
 const color = 0xffffff;
@@ -103,7 +103,7 @@ loader.load("assets/duck.gltf", (gltf) => {
 });
 
 function render() {
-    controls.update();
+    // controls.update();
     renderer.render(scene, camera);
     requestAnimationFrame(render);
 }
@@ -133,6 +133,5 @@ window.addEventListener("mousemove", (event) => {
 
 
 window.addEventListener("mousemove", (event) => {
-    moveMouse.x = (event.clientX / window.innerWidth) * 2 - 1;
     moveMouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 });
