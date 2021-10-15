@@ -18,11 +18,11 @@ const renderer = new THREE.WebGLRenderer({
 scene.background = new THREE.Color(0xffffff);
 
 //controls
-// const controls = new OrbitControls(camera, canvas);
-// controls.enablePan = false;
-// controls.maxPolarAngle = Math.PI;
-// controls.enableDamping = true;
-// controls.dampingFactor = 0.1;
+const controls = new OrbitControls(camera, canvas);
+controls.enablePan = false;
+controls.maxPolarAngle = Math.PI;
+controls.enableDamping = true;
+controls.dampingFactor = 0.1;
 
 //light
 const color = 0xffffff;
@@ -54,7 +54,7 @@ loader.load("assets/flower.gltf", (gltf) => {
     flower.scale.set(0.1, 0.1, 0.1);
     flower.position.set(-3, 2, 0);
     scene.add(flower);
-    console.log(gltf);
+    // console.log(gltf);
 
     flower.userData.draggable = true;
     flower.userData.name = "flower";
@@ -88,11 +88,22 @@ loader.load("assets/ice2.gltf", (gltf) => {
     ice.userData.name = "ice";
 });
 
-loader.load("assets/leaf.gltf", (gltf) => {
-    let leaf = gltf.scene;
+loader.load("assets/leaf_in.gltf", (gltf) => {
+    const leaf = new THREE.Group();
+    // console.log(gltf);
+    // leaf.add(gltf.scene.children[0]);
+    // leaf.add(gltf.scene.children[1]);
+    scene.add(gltf.scene.children[1]);
+    leaf.scale.set(2,2,2)
     leaf.position.set(-6, -2, 0);
-    leaf.rotation.z = Math.PI / 4;
-    // scene.add(leaf);
+
+    // leaf.rotation.z = Math.PI / 4;
+
+    leaf.userData.draggable = true;
+    leaf.userData.name = "leaf";
+
+    // const vector = new THREE.Vector3( 0, 1, 1 );
+    // leaf.setRotationFromAxisAngle(vector.normalize(), 1);
 });
 
 loader.load("assets/duck.gltf", (gltf) => {
@@ -115,17 +126,26 @@ const moveMouse = new THREE.Vector2(); // create once
 let draggable = THREE.Object3D;
 
 window.addEventListener("mousemove", (event) => {
-    console.log(event);
     clickMouse.x = (event.clientX / window.innerWidth) * 2 - 1;
     clickMouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
     raycaster.setFromCamera(clickMouse, camera);
     const found = raycaster.intersectObjects(scene.children);
+    // console.log(found);
     if (found.length > 0 && found[0].object.userData.draggable) {
         draggable = found[0].object;
-        console.log(`found draggable ${draggable.userData.name}`);
-        draggable.rotation.y += Math.PI/360 * event.movementX;
-        draggable.rotation.x += Math.PI/360 * event.movementY;
+        // console.log(`found draggable ${draggable.userData.name}`);
+        const point = found[0].point;
+        const direction = point.sub(draggable.position);
+        console.log(direction);
+        // const angle = point.angleTo(draggable.position);
+        const angle = Math.PI / 3;
+        // console.log(draggable.position.angleTo(found[0].point));
+        // console.log(direction.normalize())
+        // draggable.setRotationFromAxisAngle(point.normalize(), Math.PI / 30);
+        draggable.rotation.x = direction.x * angle;
+        draggable.rotation.y = direction.y * angle;
+        draggable.rotation.z = direction.z * angle;
     }
 
     renderer.render(scene, camera);
