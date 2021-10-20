@@ -16,22 +16,23 @@ camera.position.set(0, 0, 50);
 const renderer = new THREE.WebGLRenderer({
     canvas: canvas,
     antialias: true,
+    alpha: true
 });
-scene.background = new THREE.Color(0xffffff);
+// scene.background = new THREE.Color(0xffffff);
 
 //light
 {
     const color = 0xf6b315;
-    const intensity = 1;
+    const intensity = 2;
     const light = new THREE.PointLight(color, intensity);
-    light.position.set(5, 5, 10);
+    light.position.set(10, 5, 10);
     scene.add(light);
 }
 {
     const color = 0xff0000;
     const intensity = 1;
     const light = new THREE.PointLight(color, intensity);
-    light.position.set(-5, -5, 10);
+    light.position.set(-10, -5, 10);
     scene.add(light);
 }
 {
@@ -53,31 +54,34 @@ const loader = new GLTFLoader();
 loader.load("../assets/model/soup.gltf", (gltf) => {
     let soup = gltf.scene.children[0];
     scene.add(soup);
-    soup.rotation.y = Math.PI / 6;
-    soup.rotation.x = Math.PI / 10;
+    // soup.rotation.y = Math.PI / 6;
+    // soup.rotation.x = Math.PI / 10;
+    soup.scale.set(2,2,2)
 });
 
 loader.load("../assets/model/potato.gltf", (gltf) => {
     let potato = gltf.scene.children[0];
-    scene.add(potato);
+    // scene.add(potato);
     potato.rotation.y = -Math.PI / 3;
     potato.rotation.x = Math.PI / 5;
     potato.position.set(-3, 2, 0);
 });
 
 loader.load("../assets/model/pizza_round.gltf", (gltf) => {
-    let potato = gltf.scene.children[0];
+    let pizza = gltf.scene.children[0];
     // gltf.scene.traverse(function (child) {
     //     child.material = new THREE.MeshPhongMaterial({ color: 0x00ff00 });
     // });
-    scene.add(potato);
-    potato.material = new THREE.MeshPhongMaterial({ color: 0xffff00 });
-    potato.position.set(3, 2, 0);
+    scene.add(pizza);
+    pizza.material = new THREE.MeshToonMaterial({ color: 0xffff00 });
+    pizza.position.set(7.5, 0, 0);
+    pizza.scale.set(2, 2, 2);
+
 });
 
 loader.load("../assets/model/chicken.gltf", (gltf) => {
     let chicken = gltf.scene.children[0];
-    scene.add(chicken);
+    // scene.add(chicken);
     chicken.scale.set(2, 2, 2);
     chicken.position.set(4, -2, 0);
 });
@@ -85,13 +89,18 @@ loader.load("../assets/model/chicken.gltf", (gltf) => {
 loader.load("../assets/model/burger.gltf", (gltf) => {
     let burger = gltf.scene.children[0];
     scene.add(burger);
-    burger.position.set(-3, -2, 0);
+    burger.position.set(-7.5, 0, 0);
+    burger.scale.set(2, 2, 2);
+    burger.rotation.z = -Math.PI / 6;
+    burger.rotation.y = -Math.PI / 6;
+
+
 });
 
 loader.load("../assets/model/combo.gltf", (gltf) => {
-    let potato = gltf.scene.children[0];
-    scene.add(potato);
-    potato.position.set(5, 0, 0);
+    let combo = gltf.scene.children[0];
+    // scene.add(combo);
+    combo.position.set(5, 0, 0);
 });
 
 function render() {

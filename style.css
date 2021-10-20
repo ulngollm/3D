@@ -1,0 +1,28 @@
+*{
+    box-sizing: border-box;
+}
+body{
+    margin: 0;
+    overflow: hidden;
+}
+canvas{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0
+}
+.menu{
+    height: 100vh;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    align-content: end;
+    padding: 120px;
+    text-align: center;
+    font-size: 60px;
+    font-family: Manrope, sans-serif;
+    text-transform: uppercase;
+}
+.menu__item{
+    white-space: nowrap;
+}
