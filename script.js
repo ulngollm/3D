@@ -49,9 +49,6 @@ scene.background = new THREE.Color(0xffffff);
     scene.add(light);
 }
 
-// const light = new THREE.DirectionalLight(color, intensity);
-// light.position.set(0, 0, 10);
-
 const loader = new GLTFLoader();
 loader.load("../assets/model/soup.gltf", (gltf) => {
     let soup = gltf.scene.children[0];
@@ -79,15 +76,16 @@ loader.load("../assets/model/pizza_round.gltf", (gltf) => {
 });
 
 loader.load("../assets/model/chicken.gltf", (gltf) => {
-    let potato = gltf.scene.children[0];
-    scene.add(potato);
-    potato.position.set(4, -2, 0);
+    let chicken = gltf.scene.children[0];
+    scene.add(chicken);
+    chicken.scale.set(2, 2, 2);
+    chicken.position.set(4, -2, 0);
 });
 
 loader.load("../assets/model/burger.gltf", (gltf) => {
-    let potato = gltf.scene.children[0];
-    scene.add(potato);
-    potato.position.set(-3, -2, 0);
+    let burger = gltf.scene.children[0];
+    scene.add(burger);
+    burger.position.set(-3, -2, 0);
 });
 
 loader.load("../assets/model/combo.gltf", (gltf) => {
@@ -97,46 +95,36 @@ loader.load("../assets/model/combo.gltf", (gltf) => {
 });
 
 function render() {
-    // controls.update();
     renderer.render(scene, camera);
     requestAnimationFrame(render);
 }
 requestAnimationFrame(render);
 
 const raycaster = new THREE.Raycaster(); // create once
-const clickMouse = new THREE.Vector2(); // create once
-const moveMouse = new THREE.Vector2(); // create once
-let draggable = THREE.Object3D;
+const mouse = new THREE.Vector2(); // create once
 
 window.addEventListener("mousemove", (event) => {
-    clickMouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-    clickMouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-    // camera.position.x = clickMouse.x;
-    // camera.position.y = clickMouse.y;
-    raycaster.setFromCamera(clickMouse, camera);
-    const found = raycaster.intersectObjects(scene.children, false);
-    // console.log(found);
-    if (found.length > 0) {
-        draggable = found[0].object;
-        //     console.log(`found draggable ${draggable.userData.name}`);
-        //     // draggable.rotation.y = Math.PI/10 * Math.sign(event.movementX);
-        //     // draggable.rotation.x = Math.PI/10 * Math.sign(event.movementY);
-        //     camera.position.x = draggable.position.x;
-        //     camera.position.y = draggable.position.y;
-        // camera.position.z = 40;
-        if (!draggable.userData.busy) {
-            gsap.to(draggable.rotation, {
-                y: "+=" + (Math.PI / 180) * event.movementX,
-                x: "+=" + (Math.PI / 180) * event.movementY,
+    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+    raycaster.setFromCamera(mouse, camera);
+    const intersect = raycaster.intersectObjects(scene.children, false);
+    if (intersect.length > 0) {
+        const target = intersect[0].object;
+        if (!target.userData?.busy) {
+            gsap.from(target.rotation, {
+                y: Math.PI / 30,
+                x: Math.PI / 30,
+                ease: "elastic.out(1.5, 0.4)",
+                duration: 1.5,
                 onStart: function () {
-                    draggable.userData.busy = true;
+                    target.userData.busy = true;
                 },
                 onComplete: function () {
-                    gsap.to(this._targets, { y: 0, x: 0 });
-                    draggable.userData.busy = false;
+                    target.userData.busy = false;
                 },
             });
-        }
+        } else console.log(target);
     }
 
     renderer.render(scene, camera);
