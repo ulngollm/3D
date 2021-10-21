@@ -21,7 +21,7 @@ const renderer = new THREE.WebGLRenderer({
 scene.background = new THREE.Color(0xffffff);
 
 const axesHelper = new THREE.AxesHelper(10);
-scene.add(axesHelper);
+// scene.add(axesHelper);
 
 const controls = new OrbitControls(camera, canvas);
 // controls.enablePan = false;
@@ -80,37 +80,39 @@ const loader = new GLTFLoader();
 loader.load("../assets/model/low/apple.gltf", (gltf) => {
     let apple = gltf.scene.children[0];
     scene.add(apple);
-    apple.position.set(0, 0, 0);
+    apple.position.set(-7, 0, 0);
 });
 
 loader.load("../assets/model/low/red_apple.gltf", (gltf) => {
     let apple = gltf.scene.children[0];
     scene.add(apple);
-    apple.position.set(5, 0, 0);
+    apple.position.set(-3, 4, 0);
 });
 
 loader.load("../assets/model/low/orange.gltf", (gltf) => {
     let orange = gltf.scene.children[0];
     scene.add(orange);
-    orange.position.set(-5, 0, 0);
+    orange.position.set(5, 2, 0);
 });
 
 loader.load("../assets/model/low/cherry.gltf", (gltf) => {
     let cherry = gltf.scene.children[0];
     scene.add(cherry);
-    cherry.position.set(-3, 0, 3);
+    cherry.position.set(3, -2, 0);
+    cherry.rotation.z = Math.PI / 8 ;
 });
 
 loader.load("../assets/model/low/banana.gltf", (gltf) => {
     let banana = gltf.scene.children[0];
     scene.add(banana);
-    banana.position.set(3, 0,3);
+    banana.position.set(0, 0,0);
+    banana.rotation.y = - Math.PI / 6 ;
 });
 
 loader.load("../assets/model/low/pineapple.gltf", (gltf) => {
     let pineapple = gltf.scene.children[0];
     scene.add(pineapple);
-    pineapple.position.set(3, 0,6);
+    pineapple.position.set(-2, -4, 0);
 });
 
 function render() {
