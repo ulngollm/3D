@@ -12,7 +12,7 @@ canvas.setAttribute("height", window.innerHeight);
 //обязательные объекты
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(15, width / height, 10, 4000);
-camera.position.set(50, 50, 50);
+camera.position.set(10, 0, 50);
 
 const renderer = new THREE.WebGLRenderer({
     canvas: canvas,
@@ -32,9 +32,9 @@ controls.target.set(0, 0, 0);
 //light
 {
     const color = 0xffffff;
-    const intensity = 2;
+    const intensity = 1;
     const light = new THREE.PointLight(color, intensity);
-    light.position.set(20, 20, 20);
+    light.position.set(-10, 20, 20);
     scene.add(light);
 }
 // {
@@ -60,43 +60,57 @@ controls.target.set(0, 0, 0);
 // }
 
 const loader = new GLTFLoader();
-loader.load("../assets/model/hotdog.gltf", (gltf) => {
-    const textureLoader = new THREE.TextureLoader();
-    const hotdogTexture = textureLoader.load(
-        "../assets/model/G06_Hotdog_Albedo.png"
-    );
-    hotdogTexture.flipY = false;
-    gltf.scene.traverse(function (o) {
-        if (o.isMesh) {
-            o.material.map = hotdogTexture;
-        }
-    });
-    let hotdog = gltf.scene.children[0];
-    hotdog.position.set(1,0,5);
-    console.log(hotdog);
-    scene.add(hotdog);
+// loader.load("../assets/model/hotdog.gltf", (gltf) => {
+//     const textureLoader = new THREE.TextureLoader();
+//     const hotdogTexture = textureLoader.load(
+//         "../assets/model/G06_Hotdog_Albedo.png"
+//     );
+//     hotdogTexture.flipY = false;
+//     gltf.scene.traverse(function (o) {
+//         if (o.isMesh) {
+//             o.material.map = hotdogTexture;
+//         }
+//     });
+//     let hotdog = gltf.scene.children[0];
+//     hotdog.position.set(1,0,5);
+//     console.log(hotdog);
+//     scene.add(hotdog);
+// });
+
+loader.load("../assets/model/low/apple.gltf", (gltf) => {
+    let apple = gltf.scene.children[0];
+    scene.add(apple);
+    apple.position.set(0, 0, 0);
 });
 
-loader.load("../assets/model/berrycake.gltf", (gltf) => {
-    let berrycake = gltf.scene;
-    scene.add(berrycake);
-    berrycake.position.set(5, 0, 0);
+loader.load("../assets/model/low/red_apple.gltf", (gltf) => {
+    let apple = gltf.scene.children[0];
+    scene.add(apple);
+    apple.position.set(5, 0, 0);
 });
 
-loader.load("../assets/model/cupcake.gltf", (gltf) => {
-    let cupcake = gltf.scene;
-    cupcake.rotation.x = -Math.PI / 2;
-    cupcake.scale.set(3, 3, 3);
-    cupcake.position.set(0, 3, 0);
-    scene.add(cupcake);
+loader.load("../assets/model/low/orange.gltf", (gltf) => {
+    let orange = gltf.scene.children[0];
+    scene.add(orange);
+    orange.position.set(-5, 0, 0);
 });
 
-loader.load("../assets/model/donut.gltf", (gltf) => {
-    let donut = gltf.scene.children[0];
-    donut.rotation.x = -Math.PI / 2;
-    donut.scale.set(10, 10, 10);
-    donut.position.set(0, 0, 0);
-    scene.add(donut);
+loader.load("../assets/model/low/cherry.gltf", (gltf) => {
+    let cherry = gltf.scene.children[0];
+    scene.add(cherry);
+    cherry.position.set(-3, 0, 3);
+});
+
+loader.load("../assets/model/low/banana.gltf", (gltf) => {
+    let banana = gltf.scene.children[0];
+    scene.add(banana);
+    banana.position.set(3, 0,3);
+});
+
+loader.load("../assets/model/low/pineapple.gltf", (gltf) => {
+    let pineapple = gltf.scene.children[0];
+    scene.add(pineapple);
+    pineapple.position.set(3, 0,6);
 });
 
 function render() {
