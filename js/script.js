@@ -16,7 +16,7 @@ canvas.setAttribute("height", window.innerHeight);
 //обязательные объекты
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(15, width / height, 10, 2000);
-camera.position.set(10, 0, 20);
+camera.position.set(10, 10, 10);
 
 const renderer = new THREE.WebGLRenderer({
     canvas: canvas,
@@ -39,17 +39,48 @@ controls.update();
 //light
 {
     const color = 0xffffff;
-    const intensity = 1;
+    const intensity = 0.5;
     const light = new THREE.PointLight(color, intensity);
-    light.position.set(0, 10, 0);
+    light.position.set(0, 6, 10);
     scene.add(light);
-    // renderer.shadowMap.enabled = true;
-    // light.castShadow = true;
-    // light.shadow.mapSize.width = 512
-    // light.shadow.mapSize.height = 512
+    //https://redstapler.co/threejs-realistic-light-shadow-tutorial/
+    //https://threejs.org/docs/?q=LightShadow#api/en/lights/shadows/LightShadow
+    light.castShadow = true;
+    light.shadow.bias = -0.0001;
+    light.shadow.mapSize.width = 1024 * 1024
+    light.shadow.mapSize.height = 1024 * 1024
 }
+{
+    {
+        const color = 0xffffff;
+        const intensity = 0.5;
+        const light = new THREE.PointLight(color, intensity);
+        light.position.set(10, 6, 10);
+        scene.add(light);
+
+        light.castShadow = true;
+        light.shadow.bias = -0.00015;
+        light.shadow.mapSize.width = 1024 * 1024
+        light.shadow.mapSize.height = 1024 * 1024
+    }
+}
+{
+    {
+        const color = 0xffffff;
+        const intensity = 0.5;
+        const light = new THREE.PointLight(color, intensity);
+        light.position.set(0, 20, 0);
+        scene.add(light);
+
+        light.castShadow = true;
+        light.shadow.bias = -0.00015;
+        light.shadow.mapSize.width = 1024 * 1024
+        light.shadow.mapSize.height = 1024 * 1024
+    }
+}
+renderer.shadowMap.enabled = true;
 // renderer.shadowMap.type = THREE.PCFSoftShadowMap
-// renderer.shadowMap.type = THREE.BasicShadowMap
+renderer.shadowMap.type = THREE.BasicShadowMap
 // renderer.shadowMap.type = THREE.PCFShadowMap
 // renderer.shadowMap.type = THREE.VSMShadowMap
 
@@ -60,25 +91,31 @@ loader.load("../assets/model/cupcake2.gltf", (gltf) => {
     desert.traverse((child) => {
         if (child.isMesh) {
             if (child.name.includes('oreo')) {
+                // https://threejs.org/docs/#api/en/loaders/TextureLoader
                 const textureLoader = new THREE.TextureLoader();
-                textureLoader.load('../assets/model/src/Oreo.png', function(texture){
-                    const material = new THREE.MeshBasicMaterial( {
-                        map: texture
-                     });
-                    texture.flipY = false;
-                    child.material = material;
-                });
-                console.log(child);
-                // // child.receiveShadow = true;
-                // if (!child.name.includes('Plane'))
-                //     // child.castShadow = true;
+                textureLoader.load(
+                    '../assets/model/src/Oreo.png',
+                    function (texture) {
+                        const material = new THREE
+                            .MeshPhongMaterial({
+                                map: texture
+                            });
+                        texture.flipY = false;
+                        child.material = material;
+                    });
             }
+            child.receiveShadow = true;
         }
+        child.castShadow = true;
+        child.receiveShadow = true;
+        // child.material.map.anisotropy = 16;
     })
     scene.add(desert);
     desert.scale.set(3, 3, 3);
+    desert.rotation.y = Math.PI;
+
     // gsap.to(desert.rotation, {
-    //     y: 2 * Math.PI,
+    //     y: Math.PI,
     //     duration: 10,
     //     ease: "linear",
     //     repeat: -1
