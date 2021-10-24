@@ -16,7 +16,7 @@ canvas.setAttribute("height", window.innerHeight);
 //обязательные объекты
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(15, width / height, 10, 2000);
-camera.position.set(10, 10, 10);
+camera.position.set(10, 8, 10);
 
 const renderer = new THREE.WebGLRenderer({
     canvas: canvas,
@@ -49,8 +49,7 @@ controls.update();
     light.shadow.bias = -0.0001;
     light.shadow.mapSize.width = 1024 * 1024
     light.shadow.mapSize.height = 1024 * 1024
-}
-{
+} {
     {
         const color = 0xffffff;
         const intensity = 0.5;
@@ -63,8 +62,7 @@ controls.update();
         light.shadow.mapSize.width = 1024 * 1024
         light.shadow.mapSize.height = 1024 * 1024
     }
-}
-{
+} {
     {
         const color = 0xffffff;
         const intensity = 0.5;
@@ -104,22 +102,24 @@ loader.load("../assets/model/cupcake2.gltf", (gltf) => {
                         child.material = material;
                     });
             }
-            child.receiveShadow = true;
+            if (!child.name.includes('Cylinder')) {
+                child.castShadow = true;
+                child.receiveShadow = true;
+            }
         }
-        child.castShadow = true;
-        child.receiveShadow = true;
+
         // child.material.map.anisotropy = 16;
     })
     scene.add(desert);
     desert.scale.set(3, 3, 3);
-    desert.rotation.y = Math.PI;
+    // desert.rotation.y = Math.PI;
 
-    // gsap.to(desert.rotation, {
-    //     y: Math.PI,
-    //     duration: 10,
-    //     ease: "linear",
-    //     repeat: -1
-    // })
+    gsap.to(desert.rotation, {
+        y: Math.PI*2,
+        duration: 20,
+        ease: "linear",
+        repeat: -1
+    })
 });
 
 function render() {
