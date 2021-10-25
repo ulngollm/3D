@@ -93,7 +93,7 @@ renderer.shadowMap.enabled = true;
 
 
 const loader = new GLTFLoader();
-loader.load("../assets/model/cupcake2.gltf", (gltf) => {
+loader.load("../assets/model/cupcake.gltf", (gltf) => {
     let desert = gltf.scene;
     desert.traverse((child) => {
         if (child.isMesh) {
@@ -101,7 +101,7 @@ loader.load("../assets/model/cupcake2.gltf", (gltf) => {
                 // https://threejs.org/docs/#api/en/loaders/TextureLoader
                 const textureLoader = new THREE.TextureLoader();
                 textureLoader.load(
-                    '../assets/model/src/Oreo.png',
+                    '../assets/model/Oreo.jpg',
                     function (texture) {
                         const material = new THREE
                             .MeshLambertMaterial({
